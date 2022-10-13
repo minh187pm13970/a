@@ -1,0 +1,300 @@
+/* tham chiếu tới phần tử gốc file html => cặp thẻ <html> */
+:root {
+  /* global */
+  --white-color: #fff;
+  --black-color: #000;
+  --text-color: #333;
+  --primary-color: #ee4d2d;
+  --star-gold-color: #ffce3d;
+
+  --border-color: #dbdbdb;
+
+  --header-height: 120px;
+  --navbar-height: 34px;
+
+  --search-height: calc(var(--header-height) - var(--navbar-height));
+}
+
+* {
+  box-sizing: inherit;
+  /* kế thừa từ thẻ html */
+}
+
+html {
+  /* 100% = 16px , 62.5% = 10px => 1rem : 10px*/
+  font-size: 62.5%;
+  /* độ cao chữ */
+  /* 1.6 rem : 16px */
+  line-height: 1.6rem;
+  /* Roboto => font vừa link về, sans-serif: tập hợp font chữ không có chân load trang web khi link không tải được */
+  font-family: "Roboto", sans-serif;
+  box-sizing: border-box;
+}
+
+/* Responsive */
+.grid {
+  width: 1200px;
+  max-width: 100%;
+  /* kích thước < 1200px thì max-width sẽ tự động giảm width (1200px) cho width = kích thước màn hình */
+  /* kích thước > 1200px thì  width = 1200px*/
+
+  /* tự động căn giữa */
+  margin: 0 auto;
+}
+
+.grid__full-width {
+  width: 100%;
+  /* khi kh muốn dùng width (1200px) */
+}
+
+.grid__row {
+  display: flex;
+  /* những thẻ nằm trong class này => nằm trên 1 hàng ngang */
+  flex-wrap: wrap;
+  /* những thẻ vượt quá => nhảy xuống hàng */
+  margin-left: -5px;
+  margin-right: -5px;
+}
+
+/* Test */
+.grid__column-2 {
+  padding-left: 5px;
+  padding-right: 5px;
+  width: 16.6667%;
+}
+
+.grid__column-10 {
+  padding-left: 5px;
+  padding-right: 5px;
+  width: 83.3333%;
+}
+
+.grid__column-2-4 {
+  padding-left: 5px;
+  padding-right: 5px;
+  width: 20%;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* sau khi rõ về navbar */
+
+@keyframes growth {
+  from {
+    transform: scale(var(--growth-from));
+  }
+  to {
+    transform: scale(var(--growth-to));
+  }
+}
+
+/* Modal */
+.modal {
+  /* lớp chiếm hết màn hình */
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  /* học lại CSS fixed */
+
+  display: flex;
+  /* để .modal-body căn giữa */
+
+  animation: fadeIn linear 0.1s;
+}
+
+.modal-overlay {
+  /* lớp mờ mờ nhìn xuyên qua => nổi phần trọng tâm: .modal-body */
+  position: absolute;
+  /* con của modal => lấy modal làm gốc tọa độ chính */
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  /* z-index: 2; */
+  /* ông nào có z-index lớn nhất => nằm ở trên cùng */
+}
+
+.modal-body {
+  /* width: 400px;
+    height: 400px;
+    Không fix cứng như vậy => chỉ tạo ra để nhìn layout thôi
+    */
+  margin: auto;
+  /* position: relative; */
+  z-index: 1;
+
+  /* background: var(--white-color); */
+  /* border-radius: 4px; */
+  /* không fix cứng trong base =>  sẽ ảnh hưởng những cái khác*/
+  --growth-from: 0.7;
+  /* local */
+  --growth-to: 1;
+  animation: growth linear 0.1s;
+}
+
+/* Button stype */
+.btn {
+  /* CSS chung viết vào đây */
+  color: var(--text-color);
+  min-width: 124px;
+  /* đặt là min, để khi chữ dài ra => kh gặp lỗi */
+  height: 34px;
+  text-decoration: none;
+  /* đề phòng thẻ a */
+  border: none;
+  border-radius: 2px;
+  font-size: 1.5rem;
+  padding: 0 12px;
+  /* bỏ padding vì tránh TH chữ bị lệch do padding(top/bottom) khác nhau */
+  outline: none;
+  cursor: pointer;
+  /* line-height: 1.6rem; */
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--white-color);
+}
+
+.btn.btn--normal:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.btn.btn--primary {
+  /* kh bị ảnh hưởng bởi việc hover => do class ưu tiên hơn */
+
+  /* select tới thẻ có cả 2 class => nếu thiếu 1 trong 2 sẽ kh dùng đc */
+  background: var(--primary-color);
+  color: var(--white-color);
+}
+
+.btn.btn--disabled {
+  cursor: default;
+  /* filter: brightness(80%); */
+  /* giảm độ sáng => để cho biết đã bị disabled */
+  background: #c3c3c3;
+  color: #949494;
+}
+
+.btn.btn--size-s {
+  height: 30px;
+  font-size: 1.2rem;
+  padding: 0 8px;
+}
+
+/* Select Price */
+.select-input {
+  position: relative;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 2px;
+  background-color: var(--white-color);
+  min-width: 200px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  /* z-index: 1; */
+}
+
+.select-input__label {
+  font-size: 1.4rem;
+}
+
+.select-input__icon {
+  font-size: 1.4rem;
+  color: #6d6d6d;
+  position: relative;
+  top: 1px;
+}
+
+.select-input-list {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 36px;
+  border-radius: 2px;
+  list-style: none;
+  background-color: var(--white-color);
+  padding: 0;
+  margin: 0;
+  display: none;
+  animation: fadeIn ease-in 0.25s;
+  z-index: 1;
+  box-shadow: 0 1px 5px #c9c9c9;
+}
+
+.select-input-item__link {
+  display: block;
+  width: 100%;
+  height: 34px;
+  text-decoration: none;
+  font-size: 1.4rem;
+  color: var(--text-color);
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+}
+
+.select-input-item__link:hover {
+  color: var(--primary-color);
+}
+
+.select-input:hover .select-input-list {
+  display: block;
+}
+
+.select-input-list::before {
+  position: absolute;
+  content: "";
+  width: 100%;
+  height: 10px;
+  top: -10px;
+}
+
+/* Pagination */
+.pagination-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.pagination-item {
+  list-style: none;
+  margin: 0 14px;
+}
+
+.pagination-item__link {
+  --height: 30px;
+  display: block;
+  min-width: 40px;
+  text-decoration: none;
+  font-size: 1.8rem;
+  color: #979797;
+  border-radius: 2px;
+  line-height: var(--height);
+  text-align: center;
+  font-weight: 300;
+  outline: none;
+}
+
+span.pagination-item__link {
+  cursor: default;
+}
+
+.pagination-item__link--active .pagination-item__link {
+  background-color: var(--primary-color);
+  color: var(--white-color);
+}
+
+.pagination-item__link--active .pagination-item__link:hover {
+  background-color: #f05d40;
+}
